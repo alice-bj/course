@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 import os
+
+from conf import settings
 from libs.login import login
 from core.manager import Manager
-from conf import settings
 from libs.my_pickle import Mypickle
 
 func_dic = {}
@@ -16,6 +17,10 @@ def make_route(num):
 
 @make_route('1')
 def manager():
+    """
+    管理员登录，从管理员对象的数据属性中展示可操作的选项，选择序号，使用getattr()映射到管理员类的具体函数属性上
+    :return:
+    """
     user = login('manager')
     if user and user['identity'] == 'manager':
         mana = Manager('admin')
@@ -35,6 +40,10 @@ def manager():
 
 @make_route('2')
 def teacher():
+    """
+    讲师登录，读取 teacher.pkl 展示讲师下的所有班级，选择班级，展示班级下的所有学生，选择学生序号，为某个学生修改成绩，
+    找到班级里的某个学生，修改成绩，更新班级文件
+    """
     user = login('teacher')
     if user and user['identity'] == 'teacher':
         print('%s 讲师登录: '%user['user'])
@@ -78,10 +87,17 @@ def teacher():
                 class_path.edit(class_obj)
                 print('修改学员: %s 成绩成功'%student_name)
                 print('end'.center(20,'-'))
+            else:
+                print('\033[1;31m选择的序号不存在\033[0m')
+        else:
+            print('\033[1;31m选择的班级不存在\033[0m')
 
 
 @make_route('3')
 def student():
+    """
+    学员登录，读取 student.pkl 文件 知道班级名，查找班级文件 读取学员的成绩
+    """
     user = login('student')
     if user and user['identity'] == 'student':
         print('%s 学员登录：'%user['user'])

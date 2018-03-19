@@ -29,4 +29,4 @@ class Mypickle:
                     f_temp.dump(data)
                 else:
                     f_temp.dump(i)
-        os.replace(f_temp.pathname,f.name)
+        os.replace(f_temp.pathname,f.name)  # 防止断电

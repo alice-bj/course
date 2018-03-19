@@ -8,4 +8,4 @@ class Teacher:
         self.password = hashlib.md5(('123'+salt).encode('utf-8')).hexdigest()  # 123
         self.salt = salt
         self.identity = 'teacher'
-        self.classes = []   # 课程名 列表
+        self.classes = []   # 班级名 列表
